@@ -1,0 +1,149 @@
+<html>
+<head>
+    <title>To-Do List App</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container{
+            background: white;
+            padding: 25px;
+            width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        h2{
+            text-align: center;
+        }
+
+        .input-section{
+            display: flex;
+            gap: 10px;
+        }
+
+        input{
+            flex: 1;
+            padding: 10px;
+        }
+
+        button{
+            padding: 10px;
+            border: none;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover{
+            background: #0056b3;
+        }
+
+        ul{
+            list-style: none;
+            padding: 0%;
+            margin-top: 20px;
+        }
+
+        li{
+            background: #eee;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 5px;
+        }
+
+        .completed{
+            text-decoration: line-through;
+            color: gray;
+        }
+
+        .actions button{
+            margin-left:5px;
+            background: #28a745;
+        }
+
+        .delete{
+            background: red;
+        }
+
+        .edit{
+            background: orange;
+        }
+
+    </style>
+
+    <script>
+        function addTask(){
+            let input = document.getElementById("taskInput");
+            let taskText = input.value.trim();
+
+            if(taskText === ""){
+                alert("Please enter a task");
+                return;
+            }
+
+            let li = document.createElement("li");
+
+            let span = document.createElement("span");
+            span.textContent = taskText;
+
+            span.onclick = function(){
+                span.classList.toggle("completed");
+            }
+
+            let actions = document.createElement("div");
+            actions.className = "actions";
+
+            let editBtn = document.createElement("button");
+            editBtn.textContent = "Edit";
+            editBtn.className = "edit";
+
+            editBtn.onclick = function(){
+                let newTask = prompt("Edit Your Task", span.textContent);
+                if(newTask){
+                    span.textContent = newTask;
+                }
+            }
+
+            let deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "Delete";
+            deleteBtn.className = "delete";
+
+            deleteBtn.onclick = function(){
+                li.remove();
+            }
+            actions.appendChild(editBtn);
+            actions.appendChild(deleteBtn);
+
+            li.appendChild(span);
+            li.appendChild(actions);
+
+            document.getElementById("taskList").appendChild(li);
+
+            input.value = "";
+
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h2>To-Do List</h2>
+        <div class="input-section">
+            <input type="text" id="taskInput" placeholder="Enter task">
+            <button onclick="addTask()">Add</button>
+        </div>
+        <ul id="taskList"></ul>
+    </div>
+</body>
+</html>
